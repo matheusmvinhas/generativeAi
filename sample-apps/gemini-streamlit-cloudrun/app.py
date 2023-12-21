@@ -71,11 +71,11 @@ with tab1:
     prompt = f""" corrija a seguinte redação, apontanto os erros de forma clara e sugerindo a melhor forma:
     {redacao}
     """
-    # config = GenerationConfig(
-    #     temperature=temperature,
-    #     candidate_count=1,
-    #     max_output_tokens=max_output_tokens,
-    # )
+    config = GenerationConfig(
+        temperature=temperature,
+        candidate_count=1,
+        max_output_tokens=max_output_tokens,
+    )
     
     config = {
         "temperature": 0.8,
