@@ -68,16 +68,7 @@ with tab1:
     # Story premise
     redacao = st.text_input("Cole aqui sua redação: \n\n",key="redacao",value="texto")
     
-    prompt = f"""Encontre as palavras escritas erradas na redação, apontando os erros de ortografia das palavras e sugerindo a gramática correta:
-    EXEMPLO:
-        'O meio ambiente é tudo o que nos rodeia, incluindo a natureza, os seres vivos e os elementos não vivos. É essencial para a nossa sobrevivência, pois nos fornece alimentos, agua, ar puro e abrigo.No entanto, a ação umana vem causando grandes danos ao meio hambiente. O dematamento, a poluição, a cassa e a pesca predatórias são alguns dos principais problemas ambientais que enfrentamos.’
-    Resposta:
-    - Erros:
-        1- agua -> água, \n
-        2- umana -> humana, \n
-        3- hambiente -> ambiente, \n
-        4- dematamento -> desmatamento, \n
-        5- cassa -> caça
+    prompt = f"""Reescreva a redação apontando os erros de ortografia:
     {redacao}
     """
     prompt2 = f"""Encontre as palavras escritas erradas na redação, apontando os erros de ortografia das palavras e sugerindo a gramática correta:
