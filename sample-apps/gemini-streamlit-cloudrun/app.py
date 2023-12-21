@@ -90,7 +90,7 @@ with tab1:
                 response = get_gemini_pro_text_response(
                     text_model_pro,
                     contents,
-                    generation_config=config,
+                    generation_config=generation_config,
                 )
                 if response:
                     st.write("Sua redação corrigida:")
@@ -125,7 +125,7 @@ with tab2:
                 response = get_gemini_pro_text_response(
                     text_model_pro,
                     contents,
-                    generation_config=config,
+                    generation_config=generation_config,
                 )
                 if response:
                     st.write("Sua resposta:")
