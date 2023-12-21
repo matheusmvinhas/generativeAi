@@ -68,12 +68,12 @@ with tab1:
     # Story premise
     redacao = st.text_input("Cole aqui sua redação: \n\n",key="redacao",value="texto")
     
-    prompt = f"""corrija a seguinte redação, apontando os erros de ortografia e sugerindo a gramática correta:
+    prompt = f"""corrija a seguinte redação, apontando os erros de ortografia das palavras e sugerindo a gramática correta:
     {redacao}
     """
-    prompt2 = f"""corrija a seguinte redação, apontando os erros de ortografia e reduzindo 5 pontos da nota inicial (100) para cada erro encontrado,
-    Se a nota final for menor que 50 o Resultado é REPROVADO 😔 e se for maior ou igual a 50 o Resultado é APROVADO 😁:
-    {redacao}
+    prompt2 = f"""corrija a seguinte redação, apontando os erros de ortografia das palavras e reduzindo 5 pontos da nota inicial (100) para cada erro encontrado,
+    Se a nota final for menor que 50 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 50 o Resultado é 'APROVADO 😁':
+    '{redacao}'
     Modelo:
     - Resultado: Resultado
     - Nota: nota final
