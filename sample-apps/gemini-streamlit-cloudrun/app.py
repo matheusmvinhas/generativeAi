@@ -52,7 +52,7 @@ def get_gemini_pro_text_response( model: GenerativeModel,
 st.header("Vertex AI Gemini API", divider="rainbow")
 text_model_pro = load_models()
 
-tab1, tab2 = st.tabs(["Corrigir Redação","Perguntas sobre Notas"])
+tab1, tab2 = st.tabs(["Corrigir Redação","Perguntas sobre Notas","Correção de Redação"])
 
 query = """
 SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos`
@@ -88,7 +88,7 @@ with tab1:
     generation_config = GenerationConfig(
     temperature=0.0,
     top_p=1.0,
-    top_k=32,
+    top_k=1,
     candidate_count=1,
     max_output_tokens=1000,
     )
@@ -151,6 +151,60 @@ with tab2:
     tabela
     ]
     generate_t2t = st.button("Me Responda", key="generate_answer")
+    if generate_t2t and prompt:
+        second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
+        with st.spinner("Gerando sua resposta..."):
+            with second_tab1:
+                response = get_gemini_pro_text_response(
+                    text_model_pro,
+                    contents,
+                    generation_config=generation_config,
+                )
+                if response:
+                    st.write("Sua resposta:")
+                    st.write(response)
+            with second_tab2:
+                st.text(prompt)
+
+with tab3:
+    st.write("Using Gemini Pro - Text only model")
+    st.subheader("Correção de Redação")
+
+    nome_aluno = st.text_input("Qual é o seu nome? \n\n",key="student_name",value="João")
+    redacao = st.text_input("Cole aqui sua redação \n\n",key="redacao",value="Redação")
+    prompt = f"""Seguindo os critérios:
+        1°- Nota Inicial = 100
+        2°- Erro de ortografia = 10
+        3°- Nota final = Nota Inicial - (Número de erros de ortografia*10)
+        4°- Se a Nota Final for menor que 70 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 70 o Resultado é 'APROVADO 😁'
+
+        E analisando:
+        '{redacao}'
+
+        Me responda as seguintes perguntas:
+        - Quantos erros foram encontrados ?
+        - Quais foram os erros encontrados ?
+        - Qual é a nota Final ?
+        - Qual é o resultado ?
+        Entregue as respostas seguindo o modelo:
+
+        Nome Aluno : {nome_aluno}
+        Quantidade de Erros:
+        Nota Final:
+        Resultado:
+    """
+    generation_config = GenerationConfig(
+    temperature=0.0,
+    top_p=1.0,
+    top_k=1,
+    candidate_count=1,
+    max_output_tokens=1000,
+    )
+    contents = [
+    prompt,
+    tabela
+    ]
+    generate_t2t = st.button("Corrigir Redação", key="generate_answer")
     if generate_t2t and prompt:
         second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
         with st.spinner("Gerando sua resposta..."):
