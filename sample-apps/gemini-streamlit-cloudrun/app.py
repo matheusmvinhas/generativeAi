@@ -68,7 +68,7 @@ with tab1:
     # Story premise
     redacao = st.text_input("Cole aqui sua redação: \n\n",key="redacao",value="texto")
     
-    prompt = f""" corrija a seguinte redação, apontanto os erros de forma clara e sugerindo a melhor forma:
+    prompt = f""" corrija a seguinte redação, apontando os erros de forma clara e sugerindo a melhor forma:
     {redacao}
     """
     prompt2 = f"""corrija a seguinte redação, apontando os erros de forma clara e reduzindo 5 pontos da nota inicial (100) para cada erro encontrado, Se a nota final for menor que 50 o Resultado é REPROVADO ☹️ e se for maior ou igual a 50 o Resultado é APROVADO 😁:
@@ -109,7 +109,7 @@ with tab1:
                     st.write(response)
             with first_tab2: 
                 st.text(prompt)
-    if generate_t2t and prompt2:
+    if generate_t2t2 and prompt2:
         # st.write(prompt)
         with st.spinner("Gerando nota..."):
             first_tab1, first_tab2 = st.tabs(["Nota", "prompt2"])
