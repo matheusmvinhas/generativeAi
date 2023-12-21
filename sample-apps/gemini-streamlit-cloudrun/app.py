@@ -11,11 +11,10 @@ from vertexai.preview.generative_models import (Content,
 import vertexai
 from google.cloud import bigquery
 
-client = bigquery.Client()
 PROJECT_ID = os.environ.get('GCP_PROJECT') #Your Google Cloud Project ID
 LOCATION = os.environ.get('GCP_REGION')   #Your Google Cloud Project Region
 vertexai.init(project=PROJECT_ID, location=LOCATION)
-
+client = bigquery.Client(project=PROJECT_ID)
 @st.cache_resource
 def load_models():
     text_model_pro = GenerativeModel("gemini-pro")
