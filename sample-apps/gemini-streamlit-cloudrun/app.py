@@ -188,10 +188,11 @@ with tab3:
         - Qual é o resultado ?
         Entregue as respostas seguindo o modelo:
 
-        Nome Aluno : {nome_aluno}
-        Quantidade de Erros:
-        Nota Final:
-        Resultado:
+        Nome Aluno : {nome_aluno} \n
+        Quantidade de Erros: \n
+        Erros encontrados: \n
+        Nota Final: \n
+        Resultado: \n
     """
     generation_config = GenerationConfig(
     temperature=0.0,
