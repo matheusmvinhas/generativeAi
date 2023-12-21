@@ -71,17 +71,29 @@ with tab1:
     prompt = f""" corrija a seguinte redação, apontanto os erros de forma clara e sugerindo a melhor forma:
     {redacao}
     """
+    prompt2 = f"""corrija a seguinte redação, apontando os erros de forma clara e reduzindo 5 pontos da nota inicial (100) para cada erro encontrado, Se a nota final for menor que 50 o Resultado é REPROVADO ☹️ e se for maior ou igual a 50 o Resultado é APROVADO 😁:
+    {redacao}
+    Modelo:
+    - Resultado: Resultado
+    - Nota: nota final
+    - Número de erros: número de palavras escritas erradas na redação
+    - Erros: explique os erros em português
+    """
     generation_config = GenerationConfig(
-    temperature=0.5,
+    temperature=0.0,
     top_p=1.0,
     top_k=32,
     candidate_count=1,
-    max_output_tokens=100,
+    max_output_tokens=1000,
     )
     contents = [
     prompt
     ]
+    contents2 = [
+    prompt2
+    ]
     generate_t2t = st.button("Corrija a redação", key="generate_t2t")
+    generate_t2t2 = st.button("Me de a Nota da Redação", key="generate_grade")
     if generate_t2t and prompt:
         # st.write(prompt)
         with st.spinner("Corrigindo..."):
@@ -97,6 +109,21 @@ with tab1:
                     st.write(response)
             with first_tab2: 
                 st.text(prompt)
+    if generate_t2t and prompt2:
+        # st.write(prompt)
+        with st.spinner("Gerando nota..."):
+            first_tab1, first_tab2 = st.tabs(["Nota", "prompt2"])
+            with first_tab1:
+                response = get_gemini_pro_text_response(
+                    text_model_pro,
+                    contents2,
+                    generation_config=generation_config,
+                )
+                if response:
+                    st.write("Sua redação corrigida:")
+                    st.write(response)
+            with first_tab2:
+                st.text(prompt2)
                 
 with tab2:
     st.write("Using Gemini Pro - Text only model")
@@ -107,11 +134,11 @@ with tab2:
     prompt = f"""{question}
     """
     generation_config = GenerationConfig(
-    temperature=0.5,
+    temperature=0.0,
     top_p=1.0,
     top_k=32,
     candidate_count=1,
-    max_output_tokens=100,
+    max_output_tokens=1000,
     )
     contents = [
     prompt,
