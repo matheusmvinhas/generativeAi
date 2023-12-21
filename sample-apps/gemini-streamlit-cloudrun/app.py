@@ -21,7 +21,7 @@ def load_models():
     return text_model_pro
 
 def get_gemini_pro_text_response( model: GenerativeModel,
-                                  contents: str, 
+                                  contents,
                                   generation_config: GenerationConfig,
                                   stream=True):
     
@@ -33,7 +33,7 @@ def get_gemini_pro_text_response( model: GenerativeModel,
     }
     
     
-    responses = model.generate_content(prompt,
+    responses = model.generate_content(contents,
                                        generation_config = generation_config,
                                        safety_settings=safety_settings,
                                        stream=True)
@@ -71,17 +71,16 @@ with tab1:
     prompt = f""" corrija a seguinte redação, apontanto os erros de forma clara e sugerindo a melhor forma:
     {redacao}
     """
-    config = GenerationConfig(
-        temperature=temperature,
-        candidate_count=1,
-        max_output_tokens=max_output_tokens,
+    generation_config = GenerationConfig(
+    temperature=0.5,
+    top_p=1.0,
+    top_k=32,
+    candidate_count=1,
+    max_output_tokens=100,
     )
-    
-    config = {
-        "temperature": 0.8,
-        "max_output_tokens": 2048,
-        }
-    
+    contents = [
+    prompt
+    ]
     generate_t2t = st.button("Corrija a redação", key="generate_t2t")
     if generate_t2t and prompt:
         # st.write(prompt)
@@ -90,7 +89,7 @@ with tab1:
             with first_tab1: 
                 response = get_gemini_pro_text_response(
                     text_model_pro,
-                    prompt,
+                    contents,
                     generation_config=config,
                 )
                 if response:
@@ -107,10 +106,17 @@ with tab2:
     
     prompt = f"""{question}
     """
-    config = {
-        "temperature": 0.8,
-        "max_output_tokens": 2048,
-        }
+    generation_config = GenerationConfig(
+    temperature=0.5,
+    top_p=1.0,
+    top_k=32,
+    candidate_count=1,
+    max_output_tokens=100,
+    )
+    contents = [
+    prompt,
+    tabela
+    ]
     generate_t2t = st.button("Me Responda", key="generate_answer")
     if generate_t2t and prompt:
         second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
@@ -118,8 +124,7 @@ with tab2:
             with second_tab1:
                 response = get_gemini_pro_text_response(
                     text_model_pro,
-                    prompt,
-                    tabela,
+                    contents,
                     generation_config=config,
                 )
                 if response:
