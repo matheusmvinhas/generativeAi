@@ -69,6 +69,15 @@ with tab1:
     redacao = st.text_input("Cole aqui sua redação: \n\n",key="redacao",value="texto")
     
     prompt = f"""Encontre as palavras escritas erradas na redação, apontando os erros de ortografia das palavras e sugerindo a gramática correta:
+    EXEMPLO:
+        'O meio ambiente é tudo o que nos rodeia, incluindo a natureza, os seres vivos e os elementos não vivos. É essencial para a nossa sobrevivência, pois nos fornece alimentos, agua, ar puro e abrigo.No entanto, a ação umana vem causando grandes danos ao meio hambiente. O dematamento, a poluição, a cassa e a pesca predatórias são alguns dos principais problemas ambientais que enfrentamos.’
+    Resposta:
+    - Erros:
+        1- agua -> água,
+        2- umana -> humana,
+        3- hambiente -> ambiente,
+        4- dematamento -> desmatamento,
+        5- cassa -> caça
     {redacao}
     """
     prompt2 = f"""Encontre as palavras escritas erradas na redação, e reduza 5 pontos da nota inicial (100) para cada erro encontrado,
@@ -80,13 +89,12 @@ with tab1:
         - Nota: 75
         - Número de erros: 5
         - Erros:
-            1- agua -> água
-            2- umana -> humana
-            3- hambiente -> ambiente
-            4- dematamento -> desmatamento
+            1- agua -> água,
+            2- umana -> humana,
+            3- hambiente -> ambiente,
+            4- dematamento -> desmatamento,
             5- cassa -> caça
-
-    REDAÇÃO:
+    Sigua o exemplo de resposta e resultado para a seguinte redação:
     '{redacao}'
     """
     generation_config = GenerationConfig(
