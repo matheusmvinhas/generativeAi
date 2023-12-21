@@ -77,7 +77,7 @@ with tab1:
 
         - Quantas palavras estão escritas erradas na redação?
         - Qual é a nota final subtraindo 5 pontos para cada palavra errada encontrada e sabendo que a nota inicial é 100?
-        - Qual é o resultado sabendo que se a nota final for menor que 50 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 50 o Resultado é 'APROVADO 😁'?
+        - Qual é o resultado sabendo que se a nota final for menor que 70 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 70 o Resultado é 'APROVADO 😁'?
         - Reescreva a redação usando a ortografia correta
         Siga o Modelo:
         - Numero de erros: quantidade de palavras erradas
