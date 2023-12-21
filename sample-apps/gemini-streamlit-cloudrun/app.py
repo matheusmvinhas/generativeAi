@@ -73,10 +73,10 @@ with tab1:
         'O meio ambiente é tudo o que nos rodeia, incluindo a natureza, os seres vivos e os elementos não vivos. É essencial para a nossa sobrevivência, pois nos fornece alimentos, agua, ar puro e abrigo.No entanto, a ação umana vem causando grandes danos ao meio hambiente. O dematamento, a poluição, a cassa e a pesca predatórias são alguns dos principais problemas ambientais que enfrentamos.’
     Resposta:
     - Erros:
-        1- agua -> água,
-        2- umana -> humana,
-        3- hambiente -> ambiente,
-        4- dematamento -> desmatamento,
+        1- agua -> água, \n
+        2- umana -> humana, \n
+        3- hambiente -> ambiente, \n
+        4- dematamento -> desmatamento, \n
         5- cassa -> caça
     {redacao}
     """
@@ -89,10 +89,10 @@ with tab1:
         - Nota: 75
         - Número de erros: 5
         - Erros:
-            1- agua -> água,
-            2- umana -> humana,
-            3- hambiente -> ambiente,
-            4- dematamento -> desmatamento,
+            1- agua -> água, \n
+            2- umana -> humana, \n
+            3- hambiente -> ambiente, \n
+            4- dematamento -> desmatamento, \n
             5- cassa -> caça
     Sigua o exemplo de resposta e resultado para a seguinte redação:
     '{redacao}'
