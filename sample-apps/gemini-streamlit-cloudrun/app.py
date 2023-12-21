@@ -171,7 +171,7 @@ with tab3:
     st.subheader("Correção de Redação")
 
     nome_aluno = st.text_input("Qual é o seu nome? \n\n",key="student_name",value="João")
-    redacao = st.text_input("Cole aqui sua redação \n\n",key="redacao",value="Redação")
+    redacao = st.text_input("Cole aqui sua redação \n\n",key="redacao_escrita",value="Redação")
     prompt = f"""Seguindo os critérios:
         1°- Nota Inicial = 100
         2°- Erro de ortografia = 10
