@@ -71,22 +71,19 @@ with tab1:
     prompt = f"""Reescreva a redação apontando os erros de ortografia:
     {redacao}
     """
-    prompt2 = f"""Encontre as palavras escritas erradas na redação, apontando os erros de ortografia das palavras e sugerindo a gramática correta:
-        Se a nota final for menor que 50 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 50 o Resultado é 'APROVADO 😁':
-        EXEMPLO:
-        'O meio ambiente é tudo o que nos rodeia, incluindo a natureza, os seres vivos e os elementos não vivos. É essencial para a nossa sobrevivência, pois nos fornece alimentos, agua, ar puro e abrigo.No entanto, a ação umana vem causando grandes danos ao meio hambiente. O dematamento, a poluição, a cassa e a pesca predatórias são alguns dos principais problemas ambientais que enfrentamos.’
-        Resposta:
-        - Erros:
-        1- agua -> água, \n
-        2- umana -> humana, \n
-        3- hambiente -> ambiente, \n
-        4- dematamento -> desmatamento, \n
-        5- cassa -> caça
-        - Numero de erros: 5
-        - Nota final = 100 - (5*5) = 75
-        - Resultado = APROVADO 😁
+    prompt2 = f"""
+        REDAÇÃO:
+        {redacao}
 
-    '{redacao}'
+        - Quantas palavras estão escritas erradas na redação?
+        - Qual é a nota final subtraindo 5 pontos para cada palavra errada encontrada e sabendo que a nota inicial é 100?
+        - Qual é o resultado sabendo que se a nota final for menor que 50 o Resultado é 'REPROVADO 😔' e se for maior ou igual a 50 o Resultado é 'APROVADO 😁'?
+        - Reescreva a redação usando a ortografia correta
+        Siga o Modelo:
+        - Numero de erros: quantidade de palavras erradas
+        - Nota final = nota final
+        - Resultado = resultado
+
     """
     generation_config = GenerationConfig(
     temperature=0.0,
