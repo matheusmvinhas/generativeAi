@@ -53,7 +53,7 @@ def get_gemini_pro_text_response( model: GenerativeModel,
 st.header("Vertex AI Gemini API", divider="rainbow")
 text_model_pro = load_models()
 
-tab1, tab2, tab3, tab4 = st.tabs(["Generate story","Marketing campaign",  "Image Playground", "Video Playground"])
+tab1, tab2 = st.tabs(["Corrigir Redação","Perguntas sobre Notas"])
 
 query = """
 SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos`
