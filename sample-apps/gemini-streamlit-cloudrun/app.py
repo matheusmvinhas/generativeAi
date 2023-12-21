@@ -204,7 +204,7 @@ with tab3:
     prompt,
     tabela
     ]
-    generate_t2t = st.button("Corrigir Redação", key="generate_answer")
+    generate_t2t = st.button("Corrigir Redação", key="generate_answers")
     if generate_t2t and prompt:
         second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
         with st.spinner("Gerando sua resposta..."):
