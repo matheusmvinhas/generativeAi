@@ -66,7 +66,7 @@ with tab1:
     st.subheader("Correção de Redação")
     
     # Story premise
-    redacao = st.text_input("Cole aqui sua redação: \n\n",key="redacao",value="texto")
+    redacao = st.text_area("Cole aqui sua redação: \n\n",key="redacao",value="texto")
     
     prompt = f"""You will act as a teacher correcting an essay. Assume every student starts with a 10.
     Every time that you find a mistake, count that mistake.
