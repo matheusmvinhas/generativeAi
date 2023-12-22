@@ -114,7 +114,6 @@ with tab1:
     prompt2
     ]
     generate_t2t = st.button("Corrija a redação", key="generate_t2t")
-    generate_t2t2 = st.button("Me de a Nota da Redação", key="generate_grade")
     if generate_t2t and prompt:
         # st.write(prompt)
         with st.spinner("Corrigindo..."):
