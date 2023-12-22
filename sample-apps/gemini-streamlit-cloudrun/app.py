@@ -101,7 +101,7 @@ with tab1:
 
     """
     generation_config = GenerationConfig(
-    temperature=0.2,
+    temperature=0.1,
     top_p=0.93,
     top_k=27,
     candidate_count=1,
