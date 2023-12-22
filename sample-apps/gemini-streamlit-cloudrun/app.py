@@ -75,9 +75,9 @@ with tab1:
 
     Correções: 'The corrected version of whatever mistakes you find.'
 
-    Erros: 'The number os mistakes made'
-    Nota Final: '10 minus the number os mistakes made'
-    Resultado: 'If Nota Final is equal or greater than 7, write "Aprovado 😃", is it is less than 7, write "Reprovado 😞" '
+    Erros: 'The number os mistakes made' \n
+    Nota Final: '10 minus the number os mistakes made' \n
+    Resultado: 'If Nota Final is equal or greater than 7, write "Aprovado 😃", is it is less than 7, write "Reprovado 😞" ' \n
 
     Also, output the correct version of the essay.
 
@@ -128,7 +128,15 @@ with tab1:
                     st.write("Sua redação corrigida:")
                     st.write(response)
             with first_tab2: 
-                st.text(prompt)
+                st.text("""
+                    Como Funciona:
+                    O Gemini irá analisar a redação, econtrar os erros e reescrever com a gramática correta.
+                    Composição de nota e resultado:
+                        1°- O Aluno começa com nota 10.
+                        2°- Cada erro vale 1 ponto
+                        3°- Nota final é igual a nota inicial menos a quantidade de erro.
+                        4°- Se a nota final for maior ou igual a 7 o resultado é 'Aprovado 😃', Se for menor que 7 o resultado é 'Reprovado 😔'
+                    """)
                 
 with tab2:
     st.write("Using Gemini Pro - Text only model")
