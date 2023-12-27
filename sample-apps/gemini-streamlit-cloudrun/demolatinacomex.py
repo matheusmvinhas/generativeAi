@@ -52,7 +52,7 @@ def get_gemini_pro_text_response( model: GenerativeModel,
 st.header("Vertex AI Gemini API", divider="rainbow")
 text_model_pro = load_models()
 
-tab1 = st.tabs(["Pesquisa de Peças e Preços"])
+# tab1 = st.tabs(["Pesquisa de Peças e Preços"])
 
 query = """
 SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaLatinaComEx.produtos_autopecas`
@@ -61,38 +61,38 @@ df = client.query(query).to_dataframe()
 string_representation = df.to_string()
 tabela = string_representation
 
-with tab1:
-    st.write("Using Gemini Pro - Text only model")
-    st.subheader("Faça perguntas sobre peças e preços")
-    
-    question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é o codigo do produto X")
-    
-    prompt = f""" utilizando a tabela responda a pergunta a seguir e retorne em formato de tabela:
-        {question}
-    """
-    generation_config = GenerationConfig(
-    temperature=0.2,
-    top_p=1.0,
-    top_k=32,
-    candidate_count=1,
-    max_output_tokens=1000,
-    )
-    contents = [
-    prompt,
-    tabela
-    ]
-    generate_t2t = st.button("Me Responda", key="generate_answer")
-    if generate_t2t and prompt:
-        second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
-        with st.spinner("Gerando sua resposta..."):
-            with second_tab1:
-                response = get_gemini_pro_text_response(
-                    text_model_pro,
-                    contents,
-                    generation_config=generation_config,
-                )
-                if response:
-                    st.write("Sua resposta:")
-                    st.write(response)
-            with second_tab2:
-                st.text(prompt)
+
+st.write("Using Gemini Pro - Text only model")
+st.subheader("Faça perguntas sobre peças e preços")
+
+question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é o codigo do produto X")
+
+prompt = f""" utilizando a tabela responda a pergunta a seguir e retorne em formato de tabela:
+    {question}
+"""
+generation_config = GenerationConfig(
+temperature=0.2,
+top_p=1.0,
+top_k=32,
+candidate_count=1,
+max_output_tokens=1000,
+)
+contents = [
+prompt,
+tabela
+]
+generate_t2t = st.button("Me Responda", key="generate_answer")
+if generate_t2t and prompt:
+    second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
+    with st.spinner("Gerando sua resposta..."):
+        with second_tab1:
+            response = get_gemini_pro_text_response(
+                text_model_pro,
+                contents,
+                generation_config=generation_config,
+            )
+            if response:
+                st.write("Sua resposta:")
+                st.write(response)
+        with second_tab2:
+            st.text(prompt)
