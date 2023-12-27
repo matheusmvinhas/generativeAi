@@ -67,8 +67,7 @@ st.subheader("Faça perguntas sobre peças e preços")
 
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é o codigo do produto X")
 
-prompt = f""" utilizando a tabela responda a pergunta a seguir e retorne em formato de tabela:
-    {question}
+prompt = f"""{question}
 """
 generation_config = GenerationConfig(
 temperature=0.2,
