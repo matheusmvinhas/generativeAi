@@ -32,8 +32,8 @@ def reduce(initial_summary, prompt_template):
     return summary
 
 st.header("Vertex AI Gemini API", divider="rainbow")
-text_model_pro = load_models()
 
+generation_model = TextGenerationModel.from_pretrained("text-bison@001")
 tab1= st.tabs(["Sumarizar Arquivos"])
 
 
