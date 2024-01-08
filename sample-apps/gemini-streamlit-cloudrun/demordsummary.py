@@ -34,68 +34,64 @@ def reduce(initial_summary, prompt_template):
 st.header("Vertex AI Gemini API", divider="rainbow")
 
 generation_model = TextGenerationModel.from_pretrained("text-bison@001")
-tab1= st.tabs(["Sumarizar Arquivos"])
 
+st.write("Using LLM - Text only model")
+st.subheader("Sumarização de Arquivos")
 
+# Story premise
+arquivo = st.file_uploader("Coloque aqui o arquivo",key="arquivo")
 
-with tab1:
-    st.write("Using LLM - Text only model")
-    st.subheader("Sumarização de Arquivos")
-    
-    # Story premise
-    arquivo = st.file_uploader("Coloque aqui o arquivo",key="arquivo")
+initial_prompt_template = """
+Write a concise summary of the following text delimited by triple backquotes.
 
-    initial_prompt_template = """
-    Write a concise summary of the following text delimited by triple backquotes.
+```{text}```
 
-    ```{text}```
+CONCISE SUMMARY:
+    """
 
-    CONCISE SUMMARY:
-        """
+final_prompt_template = """
+        Write a concise summary of the following text delimited by triple backquotes.
+        Return your response in bullet points which covers the key points of the text.
 
-    final_prompt_template = """
-            Write a concise summary of the following text delimited by triple backquotes.
-            Return your response in bullet points which covers the key points of the text.
+        ```{text}```
 
-            ```{text}```
+        BULLET POINT SUMMARY:
+    """
 
-            BULLET POINT SUMMARY:
-        """
+generate_t2t = st.button("Corrija a redação", key="generate_t2t")
+if generate_t2t and prompt:
+    # st.write(prompt)
+    with st.spinner("Corrigindo..."):
+        first_tab1 = st.tabs(["Correção"])
+        with first_tab1:
+            # response = get_gemini_pro_text_response(
+            #     text_model_pro,
+            #     contents,
+            #     generation_config=generation_config,
+            # )
+            reader = PyPDF2.PdfReader(arquivo)
+            pages = reader.pages
 
-    generate_t2t = st.button("Corrija a redação", key="generate_t2t")
-    if generate_t2t and prompt:
-        # st.write(prompt)
-        with st.spinner("Corrigindo..."):
-            first_tab1 = st.tabs(["Correção"])
-            with first_tab1: 
-                # response = get_gemini_pro_text_response(
-                #     text_model_pro,
-                #     contents,
-                #     generation_config=generation_config,
-                # )
-                reader = PyPDF2.PdfReader(arquivo)
-                pages = reader.pages
+            # Create an empty list to store the summaries
+            initial_summary = []
 
-                # Create an empty list to store the summaries
-                initial_summary = []
+            # Iterate over the pages and generate a summary for each page
+            for page in tqdm(pages):
+                # Extract the text from the page and remove any leading or trailing whitespace
+                text = page.extract_text().strip()
 
-                # Iterate over the pages and generate a summary for each page
-                for page in tqdm(pages):
-                    # Extract the text from the page and remove any leading or trailing whitespace
-                    text = page.extract_text().strip()
+                # Create a prompt for the model using the extracted text and a prompt template
+                prompt = initial_prompt_template.format(text=text)
 
-                    # Create a prompt for the model using the extracted text and a prompt template
-                    prompt = initial_prompt_template.format(text=text)
+                # Generate a summary using the model and the prompt
+                summary = model_with_limit_and_backoff(prompt=prompt, max_output_tokens=1024).text
 
-                    # Generate a summary using the model and the prompt
-                    summary = model_with_limit_and_backoff(prompt=prompt, max_output_tokens=1024).text
+                # Append the summary to the list of summaries
+                initial_summary.append(summary)
 
-                    # Append the summary to the list of summaries
-                    initial_summary.append(summary)
+            response = reduce(initial_summary, final_prompt_template)
 
-                response = reduce(initial_summary, final_prompt_template)
+            if response:
+                st.write("Sua redação corrigida:")
+                st.write(response)
 
-                if response:
-                    st.write("Sua redação corrigida:")
-                    st.write(response)
-                
