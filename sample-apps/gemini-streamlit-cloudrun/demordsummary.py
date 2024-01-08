@@ -59,9 +59,9 @@ final_prompt_template = """
     """
 
 generate_t2t = st.button("Corrija a redação", key="generate_t2t")
-if generate_t2t and prompt:
+if generate_t2t and arquivo:
     # st.write(prompt)
-    with st.spinner("Corrigindo..."):
+    with st.spinner("sumarizando..."):
         first_tab1 = st.tabs(["Correção"])
         with first_tab1:
             # response = get_gemini_pro_text_response(
