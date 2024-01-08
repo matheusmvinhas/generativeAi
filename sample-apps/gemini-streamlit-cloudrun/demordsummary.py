@@ -31,7 +31,7 @@ def reduce(initial_summary, prompt_template):
 
     return summary
 
-st.header("Vertex AI Gemini API", divider="rainbow")
+st.header("LLM API", divider="rainbow")
 
 generation_model = TextGenerationModel.from_pretrained("text-bison@001")
 
@@ -50,7 +50,7 @@ CONCISE SUMMARY:
     """
 
 final_prompt_template = """
-        Write a concise summary of the following text delimited by triple backquotes.
+        Write a concise summary in Brazilian portuguese of the following text delimited by triple backquotes.
         Return your response in bullet points which covers the key points of the text.
 
         ```{text}```
@@ -58,15 +58,9 @@ final_prompt_template = """
         BULLET POINT SUMMARY:
     """
 
-generate_t2t = st.button("Corrija a redação", key="generate_t2t")
+generate_t2t = st.button("Sumarizar Arquivo", key="generate_t2t")
 if generate_t2t and arquivo:
-    # st.write(prompt)
     with st.spinner("sumarizando..."):
-        # response = get_gemini_pro_text_response(
-        #     text_model_pro,
-        #     contents,
-        #     generation_config=generation_config,
-        # )
         reader = PyPDF2.PdfReader(arquivo)
         pages = reader.pages
 
@@ -90,6 +84,6 @@ if generate_t2t and arquivo:
         response = reduce(initial_summary, final_prompt_template)
 
         if response:
-            st.write("Sua redação corrigida:")
+            st.write("arquivo Sumarizado:")
             st.write(response)
 
