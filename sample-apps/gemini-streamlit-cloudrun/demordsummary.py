@@ -14,38 +14,7 @@ from vertexai.language_models import TextGenerationModel
 warnings.filterwarnings("ignore")
 
 @st.cache_resource
-def load_models():
-    text_model_pro = GenerativeModel("gemini-pro")
-    return text_model_pro
 
-def get_gemini_pro_text_response( model: GenerativeModel,
-                                  contents,
-                                  generation_config: GenerationConfig,
-                                  stream=True):
-    
-    safety_settings={
-        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-    }
-    
-    
-    responses = model.generate_content(contents,
-                                       generation_config = generation_config,
-                                       safety_settings=safety_settings,
-                                       stream=True)
-
-    final_response = []
-    for response in responses:
-        try:
-            # st.write(response.text)
-            final_response.append(response.text)
-        except IndexError:
-            # st.write(response)
-            final_response.append("")
-            continue
-    return " ".join(final_response)
 
 def model_with_limit_and_backoff(**kwargs):
         return generation_model.predict(**kwargs)
