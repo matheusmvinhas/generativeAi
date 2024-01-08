@@ -62,36 +62,34 @@ generate_t2t = st.button("Corrija a redação", key="generate_t2t")
 if generate_t2t and arquivo:
     # st.write(prompt)
     with st.spinner("sumarizando..."):
-        first_tab1 = st.tabs(["Correção"])
-        with first_tab1:
-            # response = get_gemini_pro_text_response(
-            #     text_model_pro,
-            #     contents,
-            #     generation_config=generation_config,
-            # )
-            reader = PyPDF2.PdfReader(arquivo)
-            pages = reader.pages
+        # response = get_gemini_pro_text_response(
+        #     text_model_pro,
+        #     contents,
+        #     generation_config=generation_config,
+        # )
+        reader = PyPDF2.PdfReader(arquivo)
+        pages = reader.pages
 
-            # Create an empty list to store the summaries
-            initial_summary = []
+        # Create an empty list to store the summaries
+        initial_summary = []
 
-            # Iterate over the pages and generate a summary for each page
-            for page in tqdm(pages):
-                # Extract the text from the page and remove any leading or trailing whitespace
-                text = page.extract_text().strip()
+        # Iterate over the pages and generate a summary for each page
+        for page in tqdm(pages):
+            # Extract the text from the page and remove any leading or trailing whitespace
+            text = page.extract_text().strip()
 
-                # Create a prompt for the model using the extracted text and a prompt template
-                prompt = initial_prompt_template.format(text=text)
+            # Create a prompt for the model using the extracted text and a prompt template
+            prompt = initial_prompt_template.format(text=text)
 
-                # Generate a summary using the model and the prompt
-                summary = model_with_limit_and_backoff(prompt=prompt, max_output_tokens=1024).text
+            # Generate a summary using the model and the prompt
+            summary = model_with_limit_and_backoff(prompt=prompt, max_output_tokens=1024).text
 
-                # Append the summary to the list of summaries
-                initial_summary.append(summary)
+            # Append the summary to the list of summaries
+            initial_summary.append(summary)
 
-            response = reduce(initial_summary, final_prompt_template)
+        response = reduce(initial_summary, final_prompt_template)
 
-            if response:
-                st.write("Sua redação corrigida:")
-                st.write(response)
+        if response:
+            st.write("Sua redação corrigida:")
+            st.write(response)
 
