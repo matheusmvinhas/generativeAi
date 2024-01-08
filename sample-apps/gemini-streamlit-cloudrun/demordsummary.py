@@ -10,6 +10,7 @@ import ratelimit
 from google.api_core import exceptions
 from tqdm import tqdm
 from vertexai.language_models import TextGenerationModel
+import markdown
 
 warnings.filterwarnings("ignore")
 
@@ -85,5 +86,5 @@ if generate_t2t and arquivo:
 
         if response:
             st.write("arquivo Sumarizado:")
-            st.write(response)
+            st.write(markdown.markdown(response))
 
