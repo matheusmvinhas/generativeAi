@@ -108,9 +108,6 @@ def generate_sql(
     top_k: int = 40,
     top_p: float = 0.8
 ) -> str:
-    print("Generating SQL...")
-    print("Number of input tokens: " + str(len(prompt)))
-
     response = model.predict(
         prompt,
         temperature=temperature,
@@ -120,39 +117,22 @@ def generate_sql(
     )
 
     text = response.text
-    print("Number of output tokens: " + str(len(text)))
-    print("Response:")
-    print(text)
-
     # Strip text to include only the SQL code block
     text = sanitize_output(text)
-    print("Response stripped:")
-    print(text)
-
     return text
 
 def execute_sql(query: str):
-    print("Executing SQL...")
-
     # Qualify table names with your project and dataset ID
     query = query.replace(
         table_name, f"`{BQ_PROJECT_ID}.{BQ_LINKED_DATASET}.{table_name}`"
     )
-
-    print("Query:")
-    print(query)
 
     # Validate the query by performing a dry run without incurring a charge
     job_config = bigquery.QueryJobConfig(use_query_cache=False, dry_run=True)
     try:
         response = client.query(query, job_config=job_config)
     except Exception as e:
-        print("Error validating query:")
-        print(e)
         return e
-
-    print("Query will process {:.2f} KB.".format(response.total_bytes_processed / 1024))
-
     # Execute the query
     job_config = bigquery.QueryJobConfig(
         use_query_cache=False, maximum_bytes_billed=BQ_MAX_BYTES_BILLED
@@ -161,10 +141,7 @@ def execute_sql(query: str):
         response = client.query(query)
         df = response.to_dataframe()
     except Exception as e:
-        print("Error executing query:")
-        print(e)
         return e
-
     return df
 
 st.header("Vertex AI Gemini API", divider="rainbow")
