@@ -63,7 +63,7 @@ query_dist = """
 Select Distinct VENDEDOR FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
 """
 df_dist = client.query(query_dist).to_dataframe()
-vendedores_lista = df_dist['VEDENDOR'].tolist()
+vendedores_lista = df_dist['VENDEDOR'].tolist()
 tabela = string_representation
 
 vendedor = st.selectbox('Qual Vendedor ?', vendedores_lista)
