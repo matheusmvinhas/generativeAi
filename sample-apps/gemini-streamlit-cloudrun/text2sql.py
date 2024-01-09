@@ -146,7 +146,7 @@ def execute_sql(query: str):
 
 st.header("Vertex AI Gemini API", divider="rainbow")
 
-question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a média da nota de matematica?")
+question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a venda da regiao NORTE por vendedor?")
 
 prompt_template = f"""\
 This is a task converting text into GoogleSQL statement.
@@ -178,6 +178,6 @@ if generate_t2t and question:
             response = execute_sql(query)
             if response:
                 st.write("Sua resposta:")
-                st.dataframe(response)
+                st.wwrite(response.all)
         with second_tab2:
             st.text(query)
