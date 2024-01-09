@@ -178,6 +178,6 @@ if generate_t2t and question:
             response = execute_sql(query)
             if response:
                 st.write("Sua resposta:")
-                st.wwrite(response.all)
+                st.wwrite(response.all())
         with second_tab2:
             st.text(query)
