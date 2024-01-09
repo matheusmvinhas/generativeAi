@@ -201,6 +201,6 @@ if generate_t2t and question:
             response = execute_sql(query)
             if response:
                 st.write("Sua resposta:")
-                st.write(response)
+                st.dataframe(response)
         with second_tab2:
             st.text(query)
