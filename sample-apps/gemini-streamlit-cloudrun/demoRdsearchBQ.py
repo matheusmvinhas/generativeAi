@@ -52,13 +52,6 @@ def get_gemini_pro_text_response( model: GenerativeModel,
 st.header("Vertex AI Gemini API", divider="rainbow")
 text_model_pro = load_models()
 
-query = """
-SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos`
-"""
-df = client.query(query).to_dataframe()
-string_representation = df.to_string()
-tabela = string_representation
-
 query_dist = """
 Select Distinct VENDEDOR FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
 """
@@ -66,7 +59,22 @@ df_dist = client.query(query_dist).to_dataframe()
 vendedores_lista = df_dist['VENDEDOR'].tolist()
 tabela = string_representation
 
-vendedor = st.selectbox('Qual Vendedor ?', vendedores_lista)
+vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
+if vendedor_es:
+    query = f"""
+    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos` where VEDENDOR = '{vendedor_es}'
+    """
+    df = client.query(query).to_dataframe()
+    string_representation = df.to_string()
+    tabela = string_representation
+else:
+    query = f"""
+    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos`
+    """
+    df = client.query(query).to_dataframe()
+    string_representation = df.to_string()
+    tabela = string_representation
+
 
 st.write("Using Gemini Pro - Text only model")
 st.subheader("Faça perguntas sobre as vendas")
