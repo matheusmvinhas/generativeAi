@@ -32,7 +32,7 @@ client = bigquery.Client(project=BQ_PROJECT_ID)
 model = TextGenerationModel.from_pretrained(MODEL_ID)
 table_name =  'SalesRaiaDrogasilOBT'
 
-prompt_template = """\
+prompt_template = f"""\
 This is a task converting text into GoogleSQL statement.
 We will first give you the dataset schema and then ask a question in text.
 You are asked to generate SQL statement which is valid for BigQuery.
