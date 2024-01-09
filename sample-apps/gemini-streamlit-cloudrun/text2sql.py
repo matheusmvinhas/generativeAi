@@ -27,7 +27,7 @@ from google.cloud import bigquery
 BUCKET_ID = "csa-datasets-public"  # @param {type:"string"}
 FILENAME = "SQL_Generator_Example_Queries.csv"  # @param {type:"string"}
 client = bigquery.Client(project=BQ_PROJECT_ID)
-
+BQ_MAX_BYTES_BILLED = pow(2, 30)  # 1GB
 
 model = TextGenerationModel.from_pretrained(MODEL_ID)
 table_name =  'SalesRaiaDrogasilOBT'
