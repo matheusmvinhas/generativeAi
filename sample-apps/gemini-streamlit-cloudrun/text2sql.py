@@ -201,4 +201,4 @@ if generate_t2t and question:
                 st.write("Sua resposta:")
                 st.write(response)
         with second_tab2:
-            st.text(question)
+            st.text(query)
