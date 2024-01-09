@@ -29,7 +29,6 @@ client = bigquery.Client(project=BQ_PROJECT_ID)
 
 @st.cache_resource
 
-st.header("Vertex AI Gemini API", divider="rainbow")
 
 MODEL_ID = "text-bison@001" # @param {type:"string"}
 
@@ -185,6 +184,7 @@ def execute_sql(query: str):
 
     return df
 
+st.header("Vertex AI Gemini API", divider="rainbow")
 
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a média da nota de matematica?")
 
