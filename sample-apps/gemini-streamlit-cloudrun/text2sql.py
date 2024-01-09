@@ -135,7 +135,7 @@ def execute_sql(query: str):
     )
     try:
         response = client.query(query)
-        df = pd.Dataresponse
+        df = response
     except Exception as e:
         return e
     return df
