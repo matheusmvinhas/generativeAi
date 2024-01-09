@@ -32,19 +32,7 @@ client = bigquery.Client(project=BQ_PROJECT_ID)
 model = TextGenerationModel.from_pretrained(MODEL_ID)
 table_name =  'SalesRaiaDrogasilOBT'
 
-prompt_template = f"""\
-This is a task converting text into GoogleSQL statement.
-We will first give you the dataset schema and then ask a question in text.
-You are asked to generate SQL statement which is valid for BigQuery.
-Remove any delimiters around answer such as "```"
 
-BigQuery tables schema definition:
-{schema_definition}
-Here are a few shot examples:
-{few_examples}
-Write GoogleSQL query for following question: {question}
-Answer: "Query here"
-"""
 
 QUERY = f"""\
 SELECT
@@ -93,7 +81,19 @@ for index, row in train_df.iterrows():
     )
 
 
+prompt_template = f"""\
+This is a task converting text into GoogleSQL statement.
+We will first give you the dataset schema and then ask a question in text.
+You are asked to generate SQL statement which is valid for BigQuery.
+Remove any delimiters around answer such as "```"
 
+BigQuery tables schema definition:
+{schema_definition}
+Here are a few shot examples:
+{few_examples}
+Write GoogleSQL query for following question: {question}
+Answer: "Query here"
+"""
 
 # Strip text to include only the SQL code block with
 @st.cache_resource
