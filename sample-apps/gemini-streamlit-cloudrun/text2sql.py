@@ -28,8 +28,6 @@ from google.cloud import bigquery
 client = bigquery.Client(project=BQ_PROJECT_ID)
 
 @st.cache_resource
-
-
 MODEL_ID = "text-bison@001" # @param {type:"string"}
 
 model = TextGenerationModel.from_pretrained(MODEL_ID)
