@@ -22,13 +22,14 @@ client = bigquery.Client(project=PROJECT_ID)
 BQ_PROJECT_ID = "prj-p-ucbr-prod-ia-6ae3"  # @param {type:"string"}
 BQ_LINKED_DATASET = "demoRAGQaRaiaDrogasil"  # @param {type:"string"}
 BQ_PROCESSED_DATASET = "Teste_txt2sql"  # @param {type:"string"}
-
+MODEL_ID = "text-bison@001" # @param {type:"string"}
 from google.cloud import bigquery
-
+BUCKET_ID = "csa-datasets-public"  # @param {type:"string"}
+FILENAME = "SQL_Generator_Example_Queries.csv"  # @param {type:"string"}
 client = bigquery.Client(project=BQ_PROJECT_ID)
 
 @st.cache_resource
-MODEL_ID = "text-bison@001" # @param {type:"string"}
+
 
 model = TextGenerationModel.from_pretrained(MODEL_ID)
 
@@ -79,8 +80,7 @@ Question: {question}
 Answer: {query}
 """
 
-BUCKET_ID = "csa-datasets-public"  # @param {type:"string"}
-FILENAME = "SQL_Generator_Example_Queries.csv"  # @param {type:"string"}
+
 
 df = pd.read_csv(f"gs://{BUCKET_ID}/{FILENAME}", header=0)
 
