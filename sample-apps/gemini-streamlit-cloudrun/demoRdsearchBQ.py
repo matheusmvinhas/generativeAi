@@ -61,6 +61,8 @@ vendedores_lista = df_dist['VENDEDOR'].tolist()
 st.write("Using Gemini Pro - Text only model")
 st.subheader("Faça perguntas sobre as vendas")
 
+vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
+
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a média da nota de matematica?")
 
 prompt = f"""CONTEXTO: Com base na tabela de dados com as colunas :
@@ -87,13 +89,9 @@ top_k=32,
 candidate_count=1,
 max_output_tokens=1000,
 )
-contents = [
-prompt,
-tabela
-]
+
 generate_t2t = st.button("Me Responda", key="generate_answer")
 if generate_t2t and prompt:
-    vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
     if vendedor_es:
         query = f"""
         SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT` where VENDEDOR = '{vendedor_es}'
@@ -101,6 +99,10 @@ if generate_t2t and prompt:
         df = client.query(query).to_dataframe()
         string_representation = df.to_string()
         tabela = string_representation
+        contents = [
+        prompt,
+        tabela
+        ]
     else:
         query = f"""
         SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
@@ -108,6 +110,10 @@ if generate_t2t and prompt:
         df = client.query(query).to_dataframe()
         string_representation = df.to_string()
         tabela = string_representation
+        contents = [
+        prompt,
+        tabela
+        ]
 
     second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
     with st.spinner("Gerando sua resposta..."):
