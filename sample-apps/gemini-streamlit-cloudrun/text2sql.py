@@ -13,7 +13,7 @@ from google.cloud import bigquery
 import numpy as np
 import pandas as pd
 from vertexai.language_models import TextGenerationModel
-
+import re
 PROJECT_ID = os.environ.get('GCP_PROJECT') #Your Google Cloud Project ID
 LOCATION = os.environ.get('GCP_REGION')   #Your Google Cloud Project Region
 vertexai.init(project=PROJECT_ID, location=LOCATION)
@@ -28,10 +28,9 @@ BUCKET_ID = "csa-datasets-public"  # @param {type:"string"}
 FILENAME = "SQL_Generator_Example_Queries.csv"  # @param {type:"string"}
 client = bigquery.Client(project=BQ_PROJECT_ID)
 
-@st.cache_resource
-
 
 model = TextGenerationModel.from_pretrained(MODEL_ID)
+table_name =  'SalesRaiaDrogasilOBT'
 
 prompt_template = """\
 This is a task converting text into GoogleSQL statement.
@@ -93,10 +92,11 @@ for index, row in train_df.iterrows():
         question=row["Question"], query=row["SQL Query"]
     )
 
-import re
+
 
 
 # Strip text to include only the SQL code block with
+@st.cache_resource
 def sanitize_output(text: str) -> str:
     # Strip whitespace and any potential backticks enclosing the code block
     text = text.strip()
@@ -111,7 +111,6 @@ def sanitize_output(text: str) -> str:
         text = text[1:]
 
     return text
-
 
 # Call model using prompt and pre-defined parameters
 def generate_sql(
@@ -143,8 +142,6 @@ def generate_sql(
     print(text)
 
     return text
-
-table_name =  'SalesRaiaDrogasilOBT'
 
 def execute_sql(query: str):
     print("Executing SQL...")
