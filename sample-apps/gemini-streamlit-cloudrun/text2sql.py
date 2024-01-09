@@ -144,7 +144,7 @@ st.header("Vertex AI Gemini API", divider="rainbow")
 
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a venda da regiao NORTE por vendedor?")
 
-prompt_template = f"""\
+prompt_template = f"""
 This is a task converting text into GoogleSQL statement.
 We will first give you the dataset schema and then ask a question in text.
 You are asked to generate SQL statement which is valid for BigQuery.
