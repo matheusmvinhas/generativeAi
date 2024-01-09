@@ -135,7 +135,7 @@ def execute_sql(query: str):
     )
     try:
         response = client.query(query)
-        df = response
+        df = pd.Dataresponse
     except Exception as e:
         return e
     return df
@@ -174,6 +174,6 @@ if generate_t2t and question:
             response = execute_sql(query)
             if response:
                 st.write("Sua resposta:")
-                st.write(response)
+                st.write(response.to_dataframe)
         with second_tab2:
             st.text(query)
