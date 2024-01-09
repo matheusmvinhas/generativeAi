@@ -101,7 +101,7 @@ if generate_t2t and prompt:
         tabela = string_representation
         contents = [
         prompt,
-        df
+        tabela
         ]
     else:
         query = f"""
@@ -112,7 +112,7 @@ if generate_t2t and prompt:
         tabela = string_representation
         contents = [
         prompt,
-        df
+        tabela
         ]
 
     second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
