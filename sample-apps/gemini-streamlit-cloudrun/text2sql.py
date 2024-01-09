@@ -142,7 +142,7 @@ def execute_sql(query: str):
         df = response.to_dataframe()
     except Exception as e:
         return e
-    return df.all()
+    return df
 
 st.header("Vertex AI Gemini API", divider="rainbow")
 
@@ -163,7 +163,7 @@ Answer: "Query here"
 """
 
 generate_t2t = st.button("Me Responda", key="generate_answer")
-if generate_t2t and question:
+if generate_t2t & question:
     second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
     with st.spinner("Gerando sua resposta..."):
         with second_tab1:
