@@ -58,29 +58,27 @@ Select Distinct VENDEDOR FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.Sal
 df_dist = client.query(query_dist).to_dataframe()
 vendedores_lista = df_dist['VENDEDOR'].tolist()
 
-vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
-if vendedor_es:
-    query = f"""
-    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT` where VENDEDOR = '{vendedor_es}'
-    """
-    df = client.query(query).to_dataframe()
-    string_representation = df.to_string()
-    tabela = string_representation
-else:
-    query = f"""
-    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
-    """
-    df = client.query(query).to_dataframe()
-    string_representation = df.to_string()
-    tabela = string_representation
-
-
 st.write("Using Gemini Pro - Text only model")
 st.subheader("Faça perguntas sobre as vendas")
 
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a média da nota de matematica?")
 
-prompt = f"""{question}
+prompt = f"""CONTEXTO: Com base na tabela de dados com as colunas :
+ID_VENDA STRING Primary Key for the sale record.
+DATA DATE Date of the sale.
+SKU	STRING Stock Keeping Unit of the product.
+PRODUTO	STRING Name of the product.
+VENDEDOR STRING Name of the salesperson.
+LOJA STRING Store where the sale occurred.
+REGIAO STRING Region of the store.
+ESTADO STRING State of the store.
+CIDADE STRING City of the store.
+PRECO NUMERIC Original price of the product.
+DESCONTO STRING Discount applied to the product (if any).
+PRECO_VENDA NUMERIC Final price after discount.
+
+Responda a pergunta:
+{question}
 """
 generation_config = GenerationConfig(
 temperature=0.0,
@@ -95,6 +93,22 @@ tabela
 ]
 generate_t2t = st.button("Me Responda", key="generate_answer")
 if generate_t2t and prompt:
+    vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
+    if vendedor_es:
+        query = f"""
+        SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT` where VENDEDOR = '{vendedor_es}'
+        """
+        df = client.query(query).to_dataframe()
+        string_representation = df.to_string()
+        tabela = string_representation
+    else:
+        query = f"""
+        SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
+        """
+        df = client.query(query).to_dataframe()
+        string_representation = df.to_string()
+        tabela = string_representation
+
     second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
     with st.spinner("Gerando sua resposta..."):
         with second_tab1:
