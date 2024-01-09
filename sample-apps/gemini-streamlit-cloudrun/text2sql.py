@@ -81,19 +81,7 @@ for index, row in train_df.iterrows():
     )
 
 
-prompt_template = f"""\
-This is a task converting text into GoogleSQL statement.
-We will first give you the dataset schema and then ask a question in text.
-You are asked to generate SQL statement which is valid for BigQuery.
-Remove any delimiters around answer such as "```"
 
-BigQuery tables schema definition:
-{schema_definition}
-Here are a few shot examples:
-{few_examples}
-Write GoogleSQL query for following question: {question}
-Answer: "Query here"
-"""
 
 # Strip text to include only the SQL code block with
 @st.cache_resource
@@ -182,6 +170,20 @@ def execute_sql(query: str):
 st.header("Vertex AI Gemini API", divider="rainbow")
 
 question = st.text_input("Faça sua pergunta \n\n",key="question",value="Qual é a média da nota de matematica?")
+
+prompt_template = f"""\
+This is a task converting text into GoogleSQL statement.
+We will first give you the dataset schema and then ask a question in text.
+You are asked to generate SQL statement which is valid for BigQuery.
+Remove any delimiters around answer such as "```"
+
+BigQuery tables schema definition:
+{schema_definition}
+Here are a few shot examples:
+{few_examples}
+Write GoogleSQL query for following question: {question}
+Answer: "Query here"
+"""
 
 generate_t2t = st.button("Me Responda", key="generate_answer")
 if generate_t2t and question:
