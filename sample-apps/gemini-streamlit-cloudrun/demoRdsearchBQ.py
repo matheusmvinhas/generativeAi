@@ -61,14 +61,14 @@ vendedores_lista = df_dist['VENDEDOR'].tolist()
 vendedor_es = st.selectbox('Qual Vendedor ?', vendedores_lista)
 if vendedor_es:
     query = f"""
-    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos` where VENDEDOR = '{vendedor_es}'
+    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT` where VENDEDOR = '{vendedor_es}'
     """
     df = client.query(query).to_dataframe()
     string_representation = df.to_string()
     tabela = string_representation
 else:
     query = f"""
-    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaSagres.notas_alunos`
+    SELECT * FROM `prj-p-ucbr-prod-ia-6ae3.demoRAGQaRaiaDrogasil.SalesRaiaDrogasilOBT`
     """
     df = client.query(query).to_dataframe()
     string_representation = df.to_string()
