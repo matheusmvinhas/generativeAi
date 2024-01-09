@@ -23,15 +23,14 @@ BQ_PROJECT_ID = "prj-p-ucbr-prod-ia-6ae3"  # @param {type:"string"}
 BQ_LINKED_DATASET = "demoRAGQaRaiaDrogasil"  # @param {type:"string"}
 BQ_PROCESSED_DATASET = "Teste_txt2sql"  # @param {type:"string"}
 MODEL_ID = "text-bison@001" # @param {type:"string"}
-from google.cloud import bigquery
+
 BUCKET_ID = "csa-datasets-public"  # @param {type:"string"}
 FILENAME = "SQL_Generator_Example_Queries.csv"  # @param {type:"string"}
 client = bigquery.Client(project=BQ_PROJECT_ID)
 BQ_MAX_BYTES_BILLED = pow(2, 30)  # 1GB
 
 model = TextGenerationModel.from_pretrained(MODEL_ID)
-table_name =  'SalesRaiaDrogasilOBT'
-
+table_name = 'SalesRaiaDrogasilOBT'
 
 
 QUERY = f"""\
@@ -84,7 +83,6 @@ for index, row in train_df.iterrows():
 
 
 # Strip text to include only the SQL code block with
-@st.cache_resource
 def sanitize_output(text: str) -> str:
     # Strip whitespace and any potential backticks enclosing the code block
     text = text.strip()
@@ -115,7 +113,6 @@ def generate_sql(
         top_k=top_k,
         top_p=top_p,
     )
-
     text = response.text
     # Strip text to include only the SQL code block
     text = sanitize_output(text)
@@ -126,7 +123,6 @@ def execute_sql(query: str):
     query = query.replace(
         table_name, f"`{BQ_PROJECT_ID}.{BQ_LINKED_DATASET}.{table_name}`"
     )
-
     # Validate the query by performing a dry run without incurring a charge
     job_config = bigquery.QueryJobConfig(use_query_cache=False, dry_run=True)
     try:
@@ -163,7 +159,7 @@ Answer: "Query here"
 """
 
 generate_t2t = st.button("Me Responda", key="generate_answer")
-if generate_t2t & question:
+if generate_t2t and question:
     second_tab1, second_tab2 = st.tabs(["Resposta", "Prompt"])
     with st.spinner("Gerando sua resposta..."):
         with second_tab1:
@@ -178,6 +174,6 @@ if generate_t2t & question:
             response = execute_sql(query)
             if response:
                 st.write("Sua resposta:")
-                st.wwrite(response)
+                st.write(response)
         with second_tab2:
             st.text(query)
